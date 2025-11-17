@@ -1,12 +1,12 @@
 package com.ll.firstapp.controller;
 
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.lang.reflect.Array;
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -103,14 +103,27 @@ public class HomeController {
 
     @GetMapping("/age/{number}")
     public String age(@PathVariable int number, Model model) {
-        int result =0;
+        int year = Year.now().getValue();
+        int result = 0;
         if (number > 1900 && number <= 2025) {
-            result = 2025 - number;
+            result = year - number;
         }
 
         model.addAttribute("number", number);
         model.addAttribute("result", result);
         return "age";
+    }
+
+    @GetMapping("/ping")
+    public String ping (Model model) {
+        return "ping";
+    }
+
+    @GetMapping("/pong")
+    public String pong (@RequestParam String title, @RequestParam String content, Model model) {
+        model.addAttribute("title",title);
+        model.addAttribute("content",content);
+        return "pong";
     }
 
 }
